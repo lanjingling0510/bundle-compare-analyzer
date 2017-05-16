@@ -7,7 +7,6 @@
     "bundleAnalyzer": "./lib/index.js"
   },
   "scripts": {
-    "start": "babel-node ./src/index.js",
     "build": "babel ./src --out-dir ./lib"
   },
   "keywords": [

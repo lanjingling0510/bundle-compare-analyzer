@@ -3,12 +3,9 @@
 const commander = require('commander');
 
 commander
-  .version(require('./package.json').version)
+  .version(require('../package.json').version)
   .usage(
-`
-
-    bundleAnalyzer add --name <bundleDir>
-    bundleAnalyzer compare <file ...>
+`[command] [flags]
 
   Arguments:
 

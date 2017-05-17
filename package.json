@@ -4,10 +4,12 @@
   "description": "Analyze the size of multiple git versions of the bundle.",
   "main": "./lib/index.js",
   "bin": {
-    "bundleAnalyzer": "./lib/index.js"
+    "azer": "./lib/index.js"
   },
   "scripts": {
-    "build": "babel ./src --out-dir ./lib"
+    "clean": "rm -rf ./lib",
+    "start": "npm run clean && gulp",
+    "build": "npm run clean && babel ./src --out-dir ./lib"
   },
   "keywords": [
     "analyze",
@@ -19,13 +21,21 @@
   "author": "rainie",
   "license": "ISC",
   "dependencies": {
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.7.5",
     "chalk": "^1.1.3",
-    "commander": "^2.9.0"
+    "commander": "^2.9.0",
+    "filesize": "^3.5.9",
+    "fs-extra": "^3.0.1",
+    "inquirer": "^3.0.6",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.4.0",
@@ -35,6 +45,12 @@
     "eslint-plugin-flowtype": "^2.32.1",
     "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.4.1"
+    "eslint-plugin-react": "^6.4.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-util": "^3.0.8",
+    "gulp-watch": "^4.3.11"
   }
 }

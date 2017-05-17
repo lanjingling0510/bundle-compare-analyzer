@@ -36,7 +36,7 @@ async function traverse(dir) {
 
   await recurse(dir);
 
-  return state;
+  return state.reverse();
 }
 
 module.exports = {

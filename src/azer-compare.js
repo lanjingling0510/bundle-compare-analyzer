@@ -32,7 +32,7 @@ async function selectBaseVersion() {
   const choices = await dir
     .traverse(DEST_PATH)
     .then(stats =>
-      stats.map(stat => [path.basename(stat.name, '.json')]).reverse(),
+      stats.map(stat => [path.basename(stat.name, '.json')]),
     );
   baseTable.updateView(choices);
   // 监听选择事件
@@ -56,7 +56,7 @@ async function selectCompareVersion() {
   const choices = await dir
     .traverse(DEST_PATH)
     .then(stats =>
-      stats.map(stat => [path.basename(stat.name, '.json')]).reverse(),
+      stats.map(stat => [path.basename(stat.name, '.json')]),
     );
   compareTable.updateView(choices);
   // 监听选择事件

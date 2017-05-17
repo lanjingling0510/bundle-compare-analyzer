@@ -123,6 +123,6 @@ async function writeLocalFile(versionID, bundleStats) {
 }
 
 function showError(error) {
-  if (error) console.log(`\n  ${chalk.magenta(error)}`);
+  if (error) console.log(`\n  ${chalk.red(error)}`);
   process.exit(1);
 }

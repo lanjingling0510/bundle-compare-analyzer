@@ -10,9 +10,9 @@ commander
 
   Arguments:
 
-    bundleDir        Directory containing all generated bundles.
-                     They will be analyzed and generate an analysis file into the .analyzer.`
+    bundleDir        Directory containing all generated bundles.`
   )
-  .command('add <bundleDir>', 'add the specified the version name of the bundle analysis file')
-  .command('compare', 'compare multiple analysis files')
+  .command('add <bundleDir>', 'add the specified the version of the bundle files')
+  .command('compare', 'compare multiple versions about bundle files information.')
+  .command('remove', 'remove the specified version')
   .parse(process.argv);

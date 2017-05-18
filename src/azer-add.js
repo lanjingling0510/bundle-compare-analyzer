@@ -17,7 +17,7 @@ const DEST_PATH = path.resolve(ROOT_PATH, '.azer');
 commander.parse(process.argv);
 
 if (_.isEmpty(commander.args)) {
-  showError('  😌  请输入生成的bundle路径.');
+  showError('Please enter the bundle path or file .');
 }
 
 async function main() {
@@ -51,7 +51,7 @@ async function showAllVersionID() {
   if (_.isEmpty(fileNames)) return;
 
   console.log();
-  console.log(chalk.green('当前已有的bundle版本名称:'));
+  console.log(chalk.green('available version:'));
   console.log(chalk.green('.........................'));
   fileNames.forEach(name => {
     console.log(chalk.green(`\n${name}\n`));
@@ -68,7 +68,7 @@ async function getVersionID() {
     {
       type: 'input',
       name: 'value',
-      message: promptMessage + `请输入版本名称（默认为${chalk.green(defaultID)}）`,
+      message: promptMessage + `Please enter a version name . (default: ${chalk.green(defaultID)})`,
     },
   ];
   const versionIDObj = await inquirer.prompt(schemaVersionID);
@@ -114,7 +114,7 @@ async function writeLocalFile(versionID, bundleStats) {
       {
         type: 'confirm',
         name: 'confirm',
-        message: `是否覆盖掉之前生成的${chalk.cyan(versionID)}.json分析文件`,
+        message: promptMessage + `Whether to coverwrite version ${chalk.cyan(versionID)}`,
         default: true,
       },
     ];
@@ -130,6 +130,6 @@ async function writeLocalFile(versionID, bundleStats) {
 }
 
 function showError(error) {
-  if (error) console.log(`\n  ${chalk.red(error)}`);
+  if (error) console.log(`\n  ☹️  ${chalk.red(error)}`);
   process.exit(1);
 }

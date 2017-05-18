@@ -37,14 +37,14 @@ async function showAllVersionID() {
     })));
 
   if (_.isEmpty(choices)) {
-    return Promise.reject('当前还没有添加版本.');
+    return Promise.reject('No version.');
   };
 
   let schema = [
     {
       type: 'checkbox',
       name: 'paths',
-      message: promptMessage + '请选择要删除的版本',
+      message: promptMessage + 'Please select the version you want to delete .',
       default: [],
       choices: choices,
     },
@@ -53,7 +53,7 @@ async function showAllVersionID() {
     const result = await inquirer.prompt(schema);
 
     if (_.isEmpty(result.paths)) {
-      return Promise.reject('没有要删除的版本.');
+      return Promise.reject('No version selected.');
     };
 
     await result.paths.map(async (path) => {
@@ -64,6 +64,6 @@ async function showAllVersionID() {
 
 
 function showError(error) {
-  if (error) console.log(`\n  ${chalk.red(error)}`);
+  if (error) console.log(`\n  ☹️  ${chalk.red(error)}`);
   process.exit(1);
 }

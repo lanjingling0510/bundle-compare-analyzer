@@ -163,11 +163,11 @@ function renderAnalyzeResult(list) {
 // 更新概览视图
 function updateSummaryView () {
   if (baseVersion) {
-    summaryBox.updateView(chalk.green('目标版本：' + baseVersion + '\n'));
+    summaryBox.updateView(chalk.green('Base    Version: ' + baseVersion + '\n'));
   }
 
   if (compareVersion) {
-    summaryBox.updateView(summaryBox.content + chalk.green('对比版本：' + compareVersion + '\n'));
+    summaryBox.updateView(summaryBox.content + chalk.green('Compare Version: ' + compareVersion + '\n'));
   }
 }
 

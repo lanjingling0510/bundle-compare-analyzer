@@ -59,7 +59,7 @@ analyzeTable.updateView = data => {
 
 // 总览视图
 const summaryBox = grid.set(9, 0, 3, 8, blessed.box, {
-  label: '  💖  统计',
+  label: '  💖  Summary',
   tags: true,
   padding: 1,
   border: {
@@ -109,9 +109,9 @@ baseTable.focus();
 screen.render();
 
 // 设置标签名
-analyzeTable.setLabel('  🌈  对比分析视图');
-baseTable.setLabel('  📝  目标版本');
-compareTable.setLabel('  📝  对比版本');
+analyzeTable.setLabel('  🌈  Analytic View');
+baseTable.setLabel('  📝  Base Version');
+compareTable.setLabel('  📝  Compare Version');
 
 function makeScrollList(columnWidth) {
   const options = makeList(columnWidth);

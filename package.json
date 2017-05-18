@@ -1,6 +1,6 @@
 {
   "name": "bundle-compare-analyzer",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Analyze the size of multiple git versions of the bundle.",
   "main": "./lib/index.js",
   "bin": {
@@ -9,7 +9,8 @@
   "scripts": {
     "clean": "rm -rf ./lib",
     "start": "npm run clean && gulp",
-    "build": "npm run clean && babel ./src --out-dir ./lib"
+    "build": "npm run clean && babel ./src --out-dir ./lib",
+    "deploy": "npm run build && cqgit"
   },
   "keywords": [
     "analyze",

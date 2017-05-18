@@ -138,7 +138,7 @@ function renderAnalyzeResult(list) {
   const allCompareSize = list.reduce((a, b) => a + b.compareSize, 0);
   const allRankSize = list.reduce((a, b) => a + b.rankSize, 0);
 
-  let summaryBoxContent = `      All Size: ${filesize(allSize)}`;
+  let summaryBoxContent = `{|} All Size: ${filesize(allSize)}`;
   if (allRankSize > 0) {
     summaryBoxContent += chalk.red(`   ↑ ${filesize(allRankSize)}`);
     summaryBoxContent += chalk.red(`   optimize: ${((allCompareSize - allSize) / allSize * 100).toFixed(2)}%`);
@@ -155,11 +155,11 @@ function renderAnalyzeResult(list) {
 // 更新概览视图
 function updateSummaryView () {
   if (baseVersion) {
-    summaryBox.updateView(chalk.green('\n 目标版本：' + baseVersion));
+    summaryBox.updateView(chalk.green('目标版本：' + baseVersion + '\n'));
   }
 
   if (compareVersion) {
-    summaryBox.updateView(summaryBox.content + chalk.green('\n 对比版本：' + compareVersion));
+    summaryBox.updateView(summaryBox.content + chalk.green('对比版本：' + compareVersion));
   }
 }
 

@@ -42,19 +42,24 @@ async function showAllVersionID() {
 
   let schema = [
     {
-      type: 'list',
-      name: 'path',
+      type: 'checkbox',
+      name: 'paths',
       message: promptMessage + '请选择要删除的版本',
-      default: 0,
+      default: [],
       choices: choices,
     },
   ];
 
     const result = await inquirer.prompt(schema);
 
-    if (result.path) {
-      await fs.remove(result.path);
-    }
+    if (_.isEmpty(result.paths)) {
+      return Promise.reject('没有要删除的版本.');
+    };
+
+    await result.paths.map(async (path) => {
+      await fs.remove(path);
+    });
+
 }
 
 

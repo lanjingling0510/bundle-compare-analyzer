@@ -53,7 +53,7 @@ async function showAllVersionID() {
   console.log(chalk.green('当前已有的bundle版本名称:'));
   console.log(chalk.green('.........................'));
   fileNames.forEach(name => {
-    console.log(`${name}\n`);
+    console.log(chalk.green(`\n${name}\n`));
   });
   console.log(chalk.green('.........................'));
 }

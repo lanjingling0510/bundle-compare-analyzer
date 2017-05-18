@@ -18,7 +18,7 @@ const baseTable = grid.set(
   6,
   4,
   contrib.table,
-  makeList('  📝  目标版本', [24]),
+  makeList([24]),
 );
 
 baseTable.updateView = data => {
@@ -33,7 +33,7 @@ const compareTable = grid.set(
   6,
   4,
   contrib.table,
-  makeList('  📝  对比版本', [30]),
+  makeList([30]),
 );
 
 compareTable.updateView = data => {
@@ -42,20 +42,18 @@ compareTable.updateView = data => {
 };
 
 // 分析视图
-const analyzeTable = grid.set(0, 0, 9, 8, contrib.table, {
-  label: '  🌈  对比分析视图',
-  fg: 'white',
-  selectedFg: 'white',
-  interactive: false,
-  columnSpacing: 1,
-  columnWidth: [30, 20, 20, 20],
-});
+const analyzeTable = grid.set(
+  0,
+  0,
+  9,
+  8,
+  blessed.listtable,
+  makeScrollList([30, 20, 20, 20]),
+);
 
 analyzeTable.updateView = data => {
-  analyzeTable.setData({
-    headers: ['File Name', 'Base Version', 'Compare Version', 'Rank'],
-    data: data,
-  });
+  const headers = ['File Name', 'Base Version', 'Compare Version', 'Rank'];
+  analyzeTable.setData([headers, ...data]);
   screen.render();
 };
 
@@ -63,35 +61,36 @@ analyzeTable.updateView = data => {
 const summaryBox = grid.set(9, 0, 3, 8, blessed.box, {
   label: '  💖  统计',
   tags: true,
+  padding: 1,
   border: {
-    type: 'line'
+    type: 'line',
   },
   style: {
     fg: 'white',
-    border: { fg: 'cyan' },
-    hover: { border: { fg: 'green' }, }
-  }
+    border: {fg: 'cyan'},
+    hover: {border: {fg: 'green'}},
+  },
 });
 
-summaryBox.updateView = (content) => {
+summaryBox.updateView = content => {
   summaryBox.content = content;
   screen.render();
-}
+};
 
 // 提示框
 const tipBox = grid.set(3, 2, 4, 4, blessed.box, {
   tags: true,
   style: {
     border: {
-      fg: 'white'
-    }
+      fg: 'white',
+    },
   },
   content: `
     Welcome!  😘
     DOWN/UP = Moves cursor between lines
     ENTER = Select version
     ESC, CTRL_C, q = Abort
-  `
+  `,
 });
 
 screen.key(['escape', 'q', 'C-c'], function(ch, key) {
@@ -102,23 +101,45 @@ screen.on('resize', function() {
   baseTable.emit('attach');
   compareTable.emit('attach');
   analyzeTable.emit('attach');
+  summaryBox.emit('attach');
 });
 
-// 允许键盘操作
-baseTable.focus();
-compareTable.focus();
 
+baseTable.focus();
 screen.render();
 
-function makeList(label, columnWidth) {
+// 设置标签名
+analyzeTable.setLabel('  🌈  对比分析视图');
+baseTable.setLabel('  📝  目标版本');
+compareTable.setLabel('  📝  对比版本');
+
+function makeScrollList(columnWidth) {
+  const options = makeList(columnWidth);
+  options.scrollable = true;
+  options.scrollbar = {ch: ' '};
+  options.style.scrollbar = {bg: 'green', fg: 'white'};
+  options.style.header = {fg: 'cyan'};
+  options.vi = true;
+  options.alwaysScroll = true;
+  options.mouse = true;
+  return options;
+}
+
+function makeList(columnWidth) {
+  const options = makeBox();
+  options.columnSpacing = 1;
+  options.noCellBorders = true;
+  options.align = 'left';
+  options.columnWidth = columnWidth;
+  options.interactive = true;
+  return options;
+}
+
+function makeBox() {
   return {
-    vi: true,
-    tags: true,
-    mouse: true,
     keys: true,
-    label: label,
-    columnSpacing: 1,
-    columnWidth: columnWidth,
+    tags: true,
+    // draggable: true,
     border: {
       type: 'line', // or bg
     },
@@ -126,9 +147,7 @@ function makeList(label, columnWidth) {
       fg: 'white',
       border: {fg: 'cyan'},
       hover: {border: {fg: 'green'}},
-      scrollbar: {bg: 'green', fg: 'white'},
     },
-    scrollbar: {ch: ' '},
   };
 }
 

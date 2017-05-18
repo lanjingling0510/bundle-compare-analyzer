@@ -1,6 +1,6 @@
 {
   "name": "bundle-compare-analyzer",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Analyze the size of multiple git versions of the bundle.",
   "main": "./lib/index.js",
   "bin": {

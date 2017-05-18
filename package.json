@@ -2,9 +2,9 @@
   "name": "bundle-compare-analyzer",
   "version": "1.0.7",
   "description": "Analyze the size of multiple git versions of the bundle.",
-  "main": "./lib/index.js",
+  "main": "./lib/azer.js",
   "bin": {
-    "azer": "./lib/index.js"
+    "azer": "./lib/azer.js"
   },
   "scripts": {
     "clean": "rm -rf ./lib",

@@ -15,7 +15,7 @@
 <p align="center">
   <br><br>
   <b>
-    bundle-compare-analyzer是一个简单的分析各个版本代码打包文件大小的可视化工具。
+    Bundle-compare-analyzer is a simple analysis of the various versions of the code output file size of the visualization tool.
   </b>
   <br><br>
   <a href="https://www.npmjs.com/package/bundle-compare-analyzer">
@@ -29,40 +29,39 @@
 </p>
 
 
-bundle-compare-analyzer可以在每次将代码文件打包时，生成一个版本。便于对比，分析各个版本打包文件的大小。
+bundle-compare-analyzer can generate a version each time the code file is packaged. Easy to compare, analyze the size of each version of the package file.
 
+<a href="./README_EN.md">中文文档</a>
 
-<a href="./README_EN.md">English Document</a>
-
-## 安装
+## Installation
 
 ```sh
 npm install -g bundle-compare-analyzer
 ```
 
-支持node4.0以上版本
+Support node4.0 or above
 
-## 使用
+## Usage
 
-bundle-compare-analyzer有三个命令:
- - `add <bundlePath/bundleFile>`: 打包完成后，根据指定的打包目录或确定的一个文件生成一个版本.
- - `compare`: 对比分析各个版本.
- - `remove`: 删除版本.
-
-
+bundle-compare-analyzer comes with three commands right now:
+ - `add <bundlePath/bundleFile>`: After the package is finished, generate a version based on the specified package directory or a defined file.
+ - `compare`: Compare each version.
+ - `remove`: Remove the version.
 
 
- ### 生成版本
+
+
+ ### Generate version
 
  ```sh
- azer add ./build // 打包路径
+ azer add ./build // bundle path
 
  ```
 
    <img alt="bundle-compare-analyzer" src="https://raw.githubusercontent.com/lanjingling0510/bundle-compare-analyzer/master/.github/screenshot_2.png">
 
 
- ### 删除版本
+ ### Remove the version.
 
  ```
   azer remove
@@ -71,7 +70,7 @@ bundle-compare-analyzer有三个命令:
 <img alt="bundle-compare-analyzer" src="https://raw.githubusercontent.com/lanjingling0510/bundle-compare-analyzer/master/.github/screenshot_3.png">
 
 
- ### 分析版本
+ ### Analysis version
 
  ```sh
  azer compare
@@ -79,9 +78,9 @@ bundle-compare-analyzer有三个命令:
  <img alt="bundle-compare-analyzer" src="https://raw.githubusercontent.com/lanjingling0510/bundle-compare-analyzer/master/.github/screenshot_4.png">
 
 
- ## 注意
+ ## Note
 
- - 推荐使用`[name].[chunkhash].js`为输出的文件名称
+ - It is recommended to use `[name]. [Chunkhash] .js` for the output file name.
 
 
  ## How to Contribute

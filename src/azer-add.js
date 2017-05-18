@@ -1,12 +1,13 @@
 #! /usr/bin/env node
 
 const commander = require('commander');
+const _ = require('lodash');
 const fs = require('fs-extra');
 const moment = require('moment');
 const path = require('path');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
-const _ = require('lodash');
+const gzipSize = require('gzip-size');
 const dir = require('./util/dir.js');
 const ROOT_PATH = process.cwd();
 const promptMessage = chalk.cyan('bundle-compare-analyzer') + ': ';
@@ -79,12 +80,18 @@ async function generateBundleStats() {
   const bundleDir = commander.args.map(value => path.resolve(ROOT_PATH, value));
   const promises = bundleDir.map(async value => {
     const stats = await dir.traverse(value);
-    return stats.map(stat => ({
-      thunk: stat.name.split('.')[0],
-      ext: path.extname(stat.name),
-      name: stat.name,
-      size: stat.stat.size,
-    }));
+    const statPromises =  stats.map(async stat => {
+      const content = await fs.readFile(stat.path, 'utf8');
+      return {
+        thunk: stat.name.split('.')[0],
+        ext: path.extname(stat.name),
+        name: stat.name,
+        size: stat.stat.size,
+        gzipSize: gzipSize.sync(content)
+      };
+    });
+
+    return Promise.all(statPromises);
   });
 
   return Promise.all(promises);

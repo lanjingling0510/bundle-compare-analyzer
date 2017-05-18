@@ -107,6 +107,8 @@ async function analyzeBundles() {
     const compare = groupCompareBundle[key] || [];
     const baseSize = base.reduce((a, b) => a + b.size, 0);
     const compareSize = compare.reduce((a, b) => a + b.size, 0);
+    const gzipBaseSize = base.reduce((a, b) => a + b.gzipSize, 0);
+    const gzipCompareSize = compare.reduce((a, b) => a + b.gzipSize, 0);
     return {
       key,
       base,
@@ -114,6 +116,7 @@ async function analyzeBundles() {
       baseSize,
       compareSize,
       rankSize: baseSize - compareSize,
+      gzipRankSize: gzipBaseSize - gzipCompareSize,
     };
   });
 
@@ -127,6 +130,7 @@ function renderAnalyzeResult(list) {
     filesize(item.baseSize),
     filesize(item.compareSize),
     formatRank(item.rankSize),
+    formatRank(item.gzipRankSize),
   ])
 
   // 清除提示框
@@ -137,18 +141,22 @@ function renderAnalyzeResult(list) {
   const allSize = list.reduce((a, b) => a + b.baseSize, 0);
   const allCompareSize = list.reduce((a, b) => a + b.compareSize, 0);
   const allRankSize = list.reduce((a, b) => a + b.rankSize, 0);
+  const allGzipRankSize = list.reduce((a, b) => a + b.gzipRankSize, 0);
 
-  let summaryBoxContent = `{|} All Size: ${filesize(allSize)}`;
+  let summaryBoxContent = `\n\n{center}All Size: ${filesize(allSize)}`;
   if (allRankSize > 0) {
-    summaryBoxContent += chalk.red(`   ↑ ${filesize(allRankSize)}`);
+    summaryBoxContent += chalk.red(`   ↑ ${filesize(allRankSize)} / ${filesize(allGzipRankSize)}`);
     summaryBoxContent += chalk.red(`   optimize: ${((allCompareSize - allSize) / allSize * 100).toFixed(2)}%`);
+    summaryBoxContent += '  😕';
   } else if (allRankSize < 0) {
-    summaryBoxContent += chalk.green(`   ↓ ${filesize(-allRankSize)}`);
+    summaryBoxContent += chalk.green(`   ↓ ${filesize(-allRankSize)} / ${filesize(-allGzipRankSize)}`);
     summaryBoxContent += chalk.green(`   optimize: ${((allCompareSize - allSize) / allSize * 100).toFixed(2)}%`);
+    summaryBoxContent += '  😝';
   } else {
     summaryBoxContent += '    -     -';
   }
 
+  summaryBoxContent += '{/center}\n';
   summaryBox.content += summaryBoxContent;
 }
 
@@ -159,7 +167,7 @@ function updateSummaryView () {
   }
 
   if (compareVersion) {
-    summaryBox.updateView(summaryBox.content + chalk.green('对比版本：' + compareVersion));
+    summaryBox.updateView(summaryBox.content + chalk.green('对比版本：' + compareVersion + '\n'));
   }
 }
 

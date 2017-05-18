@@ -48,11 +48,11 @@ const analyzeTable = grid.set(
   9,
   8,
   blessed.listtable,
-  makeScrollList([30, 20, 20, 20]),
+  makeScrollList([30, 20, 20, 20, 20]),
 );
 
 analyzeTable.updateView = data => {
-  const headers = ['File Name', 'Base Version', 'Compare Version', 'Rank'];
+  const headers = ['File Name', 'Base Version', 'Compare Version', 'Rank', 'Gizp Rank'];
   analyzeTable.setData([headers, ...data]);
   screen.render();
 };

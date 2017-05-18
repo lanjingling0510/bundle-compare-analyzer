@@ -27,6 +27,7 @@
     "commander": "^2.9.0",
     "filesize": "^3.5.9",
     "fs-extra": "^3.0.1",
+    "gzip-size": "^3.0.0",
     "inquirer": "^3.0.6",
     "lodash": "^4.17.4",
     "moment": "^2.18.1"

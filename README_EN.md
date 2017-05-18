@@ -75,8 +75,6 @@ bundle-compare-analyzer comes with three commands right now:
  ```sh
  azer compare
  ```
- <img alt="bundle-compare-analyzer" src="https://raw.githubusercontent.com/lanjingling0510/bundle-compare-analyzer/master/.github/screenshot_4.png">
-
 
  ## Note
 

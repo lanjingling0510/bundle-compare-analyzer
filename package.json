@@ -1,6 +1,6 @@
 {
   "name": "bundle-compare-analyzer",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Analyze the size of multiple git versions of the bundle.",
   "main": "./lib/azer.js",
   "bin": {

@@ -106,24 +106,26 @@ async function analyzeBundles() {
     value => value.thunk + value.ext,
   );
 
-  const analyzeList = allKeys.map(key => {
-    const base = groupBaseBundle[key] || [];
-    const compare = groupCompareBundle[key] || [];
-    const baseSize = base.reduce((a, b) => a + b.size, 0);
-    const compareSize = compare.reduce((a, b) => a + b.size, 0);
-    const gzipBaseSize = base.reduce((a, b) => a + b.gzipSize, 0);
-    const gzipCompareSize = compare.reduce((a, b) => a + b.gzipSize, 0);
-    return {
-      key,
-      base,
-      compare,
-      baseSize,
-      compareSize,
-      rankSize: baseSize - compareSize,
-      gzipBaseSize: gzipBaseSize,
-      gzipRankSize: gzipBaseSize - gzipCompareSize,
-    };
-  });
+  const analyzeList = _.chain(allKeys)
+    .map(key => {
+      const base = groupBaseBundle[key] || [];
+      const compare = groupCompareBundle[key] || [];
+      const baseSize = base.reduce((a, b) => a + b.size, 0);
+      const compareSize = compare.reduce((a, b) => a + b.size, 0);
+      const gzipBaseSize = base.reduce((a, b) => a + b.gzipSize, 0);
+      const gzipCompareSize = compare.reduce((a, b) => a + b.gzipSize, 0);
+      return {
+        key,
+        base,
+        compare,
+        baseSize,
+        compareSize,
+        rankSize: baseSize - compareSize,
+        gzipBaseSize: gzipBaseSize,
+        gzipRankSize: gzipBaseSize - gzipCompareSize,
+      };
+    })
+    .sortBy(item => - item.baseSize);
 
   return analyzeList;
 }

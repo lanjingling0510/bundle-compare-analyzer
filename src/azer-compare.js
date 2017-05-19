@@ -6,7 +6,13 @@ const chalk = require('chalk');
 const _ = require('lodash');
 const filesize = require('filesize');
 const dir = require('./util/dir.js');
-const {baseTable, compareTable, analyzeTable, summaryBox, tipBox} = require('./util/blessed.js');
+const {
+  baseTable,
+  compareTable,
+  analyzeTable,
+  summaryBox,
+  tipBox,
+} = require('./util/blessed.js');
 const ROOT_PATH = process.cwd();
 // bundle分析存储目录
 const DEST_PATH = path.resolve(ROOT_PATH, '.azer');
@@ -31,13 +37,12 @@ main();
 async function selectBaseVersion() {
   const choices = await dir
     .traverse(DEST_PATH)
-    .then(stats =>
-      stats.map(stat => [path.basename(stat.name, '.json')]),
-    );
+    .then(stats => stats.map(stat => [path.basename(stat.name, '.json')]));
   baseTable.updateView(choices);
   // 监听选择事件
   baseTable.on('select', value => {
     baseVersion = value.content.trim();
+    // 更新summary视图
     updateSummaryView();
     if (compareVersion) {
       (async () => {
@@ -55,13 +60,12 @@ async function selectBaseVersion() {
 async function selectCompareVersion() {
   const choices = await dir
     .traverse(DEST_PATH)
-    .then(stats =>
-      stats.map(stat => [path.basename(stat.name, '.json')]),
-    );
+    .then(stats => stats.map(stat => [path.basename(stat.name, '.json')]));
   compareTable.updateView(choices);
   // 监听选择事件
   compareTable.on('select', value => {
     compareVersion = value.content.trim();
+    // 更新summary视图
     updateSummaryView();
 
     if (baseVersion) {
@@ -116,6 +120,7 @@ async function analyzeBundles() {
       baseSize,
       compareSize,
       rankSize: baseSize - compareSize,
+      gzipBaseSize: gzipBaseSize,
       gzipRankSize: gzipBaseSize - gzipCompareSize,
     };
   });
@@ -131,7 +136,7 @@ function renderAnalyzeResult(list) {
     filesize(item.compareSize),
     formatRank(item.rankSize),
     formatRank(item.gzipRankSize),
-  ])
+  ]);
 
   // 清除提示框
   tipBox.detach();
@@ -139,18 +144,27 @@ function renderAnalyzeResult(list) {
   analyzeTable.updateView(data);
 
   const allSize = list.reduce((a, b) => a + b.baseSize, 0);
+  const allGzipSize = list.reduce((a, b) => a + b.gzipBaseSize, 0);
   const allCompareSize = list.reduce((a, b) => a + b.compareSize, 0);
   const allRankSize = list.reduce((a, b) => a + b.rankSize, 0);
   const allGzipRankSize = list.reduce((a, b) => a + b.gzipRankSize, 0);
 
-  let summaryBoxContent = `\n\n{center}All Size: ${filesize(allSize)}`;
+  let summaryBoxContent = `\n\n{center}All Size: ${filesize(allSize)} / (gzip) ${filesize(allGzipSize)}`;
   if (allRankSize > 0) {
-    summaryBoxContent += chalk.red(`   ↑ ${filesize(allRankSize)} / ${filesize(allGzipRankSize)}`);
-    summaryBoxContent += chalk.red(`   optimize: ${((allCompareSize - allSize) / allSize * 100).toFixed(2)}%`);
+    summaryBoxContent += chalk.red(
+      `   ↑ ${filesize(allRankSize)} / (gzip) ${filesize(allGzipRankSize)}`,
+    );
+    summaryBoxContent += chalk.red(
+      `   optimize: ${((allCompareSize - allSize) / allSize * 100).toFixed(2)}%`,
+    );
     summaryBoxContent += '  😕';
   } else if (allRankSize < 0) {
-    summaryBoxContent += chalk.green(`   ↓ ${filesize(-allRankSize)} / ${filesize(-allGzipRankSize)}`);
-    summaryBoxContent += chalk.green(`   optimize: ${((allCompareSize - allSize) / allSize * 100).toFixed(2)}%`);
+    summaryBoxContent += chalk.green(
+      `   ↓ ${filesize(-allRankSize)} / (gzip) ${filesize(-allGzipRankSize)}`,
+    );
+    summaryBoxContent += chalk.green(
+      `   optimize: ${((allCompareSize - allSize) / allSize * 100).toFixed(2)}%`,
+    );
     summaryBoxContent += '  😝';
   } else {
     summaryBoxContent += '    -     -';
@@ -161,14 +175,16 @@ function renderAnalyzeResult(list) {
 }
 
 // 更新概览视图
-function updateSummaryView () {
+function updateSummaryView() {
+  let content = '';
   if (baseVersion) {
-    summaryBox.updateView(chalk.green('Base    Version: ' + baseVersion + '\n'));
+    content = chalk.green('Base    Version: ' + baseVersion + '\n');
   }
 
   if (compareVersion) {
-    summaryBox.updateView(summaryBox.content + chalk.green('Compare Version: ' + compareVersion + '\n'));
+    content += chalk.green('Compare Version: ' + compareVersion + '\n');
   }
+  summaryBox.updateView(content);
 }
 
 // 格式化变化量

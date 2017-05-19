@@ -14,9 +14,9 @@ const grid = new contrib.grid({rows: 12, cols: 12, screen: screen});
 // 目标版本
 const baseTable = grid.set(
   0,
-  8,
+  9,
   6,
-  4,
+  3,
   blessed.listtable,
   makeScrollList([30]),
 );
@@ -29,9 +29,9 @@ baseTable.updateView = data => {
 // 对比版本
 const compareTable = grid.set(
   6,
-  8,
+  9,
   6,
-  4,
+  3,
   blessed.listtable,
   makeScrollList([30]),
 );
@@ -45,8 +45,8 @@ compareTable.updateView = data => {
 const analyzeTable = grid.set(
   0,
   0,
+  10,
   9,
-  8,
   blessed.listtable,
   makeScrollList([30, 20, 20, 20, 20]),
 );
@@ -58,19 +58,7 @@ analyzeTable.updateView = data => {
 };
 
 // 总览视图
-const summaryBox = grid.set(9, 0, 3, 8, blessed.box, {
-  label: '  💖  Summary',
-  tags: true,
-  padding: 1,
-  border: {
-    type: 'line',
-  },
-  style: {
-    fg: 'white',
-    border: {fg: 'cyan'},
-    hover: {border: {fg: 'green'}},
-  },
-});
+const summaryBox = grid.set(9, 0, 3, 9, blessed.box, makeScrollBox());
 
 summaryBox.updateView = content => {
   summaryBox.content = content;
@@ -78,7 +66,7 @@ summaryBox.updateView = content => {
 };
 
 // 提示框
-const tipBox = grid.set(3, 2, 4, 4, blessed.box, {
+const tipBox = grid.set(3, 3, 4, 4, blessed.box, {
   tags: true,
   style: {
     border: {
@@ -112,6 +100,7 @@ screen.render();
 analyzeTable.setLabel('  🌈  Analytic View');
 baseTable.setLabel('  📝  Base Version');
 compareTable.setLabel('  📝  Compare Version');
+summaryBox.setLabel('  💖  Summary');
 
 function makeScrollList(columnWidth) {
   const options = makeList(columnWidth);
@@ -151,6 +140,18 @@ function makeBox() {
       hover: {border: {fg: 'green'}},
     },
   };
+}
+
+function makeScrollBox() {
+  const options = makeBox();
+  options.scrollable = true;
+  options.scrollbar = {ch: ' '};
+  options.style.scrollbar = {bg: 'green', fg: 'white'};
+  options.style.header = {fg: 'cyan'};
+  options.vi = true;
+  options.alwaysScroll = true;
+  options.mouse = true;
+  return options;
 }
 
 module.exports = {

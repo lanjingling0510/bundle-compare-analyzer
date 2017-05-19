@@ -17,12 +17,12 @@ const baseTable = grid.set(
   8,
   6,
   4,
-  contrib.table,
-  makeList([24]),
+  blessed.listtable,
+  makeScrollList([30]),
 );
 
 baseTable.updateView = data => {
-  baseTable.setData({headers: [], data: data});
+  baseTable.setData([[], ...data]);
   screen.render();
 };
 
@@ -32,12 +32,12 @@ const compareTable = grid.set(
   8,
   6,
   4,
-  contrib.table,
-  makeList([30]),
+  blessed.listtable,
+  makeScrollList([30]),
 );
 
 compareTable.updateView = data => {
-  compareTable.setData({headers: [], data: data});
+  compareTable.setData([[], ...data]);
   screen.render();
 };
 
@@ -128,10 +128,12 @@ function makeScrollList(columnWidth) {
 function makeList(columnWidth) {
   const options = makeBox();
   options.columnSpacing = 1;
+  options.padding = 1;
   options.noCellBorders = true;
   options.align = 'left';
   options.columnWidth = columnWidth;
   options.interactive = true;
+  options.selectedBg = 'blue';
   return options;
 }
 

@@ -36,7 +36,7 @@ async function selectBaseVersion() {
     );
   baseTable.updateView(choices);
   // 监听选择事件
-  baseTable.rows.on('select', value => {
+  baseTable.on('select', value => {
     baseVersion = value.content.trim();
     updateSummaryView();
     if (compareVersion) {
@@ -60,7 +60,7 @@ async function selectCompareVersion() {
     );
   compareTable.updateView(choices);
   // 监听选择事件
-  compareTable.rows.on('select', value => {
+  compareTable.on('select', value => {
     compareVersion = value.content.trim();
     updateSummaryView();
 

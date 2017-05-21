@@ -18,7 +18,7 @@ const baseTable = grid.set(
   6,
   3,
   blessed.listtable,
-  makeScrollList([30]),
+  makeScrollList(),
 );
 
 baseTable.updateView = data => {
@@ -33,7 +33,7 @@ const compareTable = grid.set(
   6,
   3,
   blessed.listtable,
-  makeScrollList([30]),
+  makeScrollList(),
 );
 
 compareTable.updateView = data => {
@@ -48,7 +48,7 @@ const analyzeTable = grid.set(
   10,
   9,
   blessed.listtable,
-  makeScrollList([30, 20, 20, 20, 20]),
+  makeScrollList(),
 );
 
 analyzeTable.updateView = data => {
@@ -102,8 +102,8 @@ baseTable.setLabel('  📝  Base Version');
 compareTable.setLabel('  📝  Compare Version');
 summaryBox.setLabel('  💖  Summary');
 
-function makeScrollList(columnWidth) {
-  const options = makeList(columnWidth);
+function makeScrollList() {
+  const options = makeList();
   options.scrollable = true;
   options.scrollbar = {ch: ' '};
   options.style.scrollbar = {bg: 'green', fg: 'white'};
@@ -114,13 +114,12 @@ function makeScrollList(columnWidth) {
   return options;
 }
 
-function makeList(columnWidth) {
+function makeList() {
   const options = makeBox();
   options.columnSpacing = 1;
   options.padding = 1;
   options.noCellBorders = true;
   options.align = 'left';
-  options.columnWidth = columnWidth;
   options.interactive = true;
   options.selectedBg = 'blue';
   return options;

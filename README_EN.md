@@ -28,10 +28,16 @@
 
 </p>
 
+`Webpack`, `gulp`, `browserify` and other tools are always packaged source code into multiple bundles of JS files, we often need to optimize the package file size.
 
-bundle-compare-analyzer can generate a version each time the code file is packaged. Easy to compare, analyze the size of each version of the package file.
+bundle-compare-analyzer can generate a version each time the source code is packaged. Easy to compare, analyze the size of each version of the bundles of JS files.
 
 <a href="./README_EN.md">中文文档</a>
+
+## Feature
+
+- Leave each time webpack, gulp, browserify and other tools to generate bundle file information.
+- Intuitive analysis of webpack, gulp, browserify and other tools to generate the size of the bundle file.
 
 ## Installation
 

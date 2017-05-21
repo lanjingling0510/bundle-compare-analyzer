@@ -29,7 +29,15 @@
 </p>
 
 
+`webpack`, `gulp`，`browserify`等工具 把我们所有的文件都打包成多个bundle JS 文件, 我们经常需要优化打包文件体积。
+
 bundle-compare-analyzer可以在每次将代码文件打包时，生成一个版本。便于对比，分析各个版本打包文件的大小。
+
+## 特点
+
+- 保留每次`webpack`, `gulp`，`browserify`等工具生成 bundle 文件的信息.
+- 直观的分析`webpack`, `gulp`，`browserify`等工具生成 bundle 文件的大小.
+
 
 
 <a href="./README_EN.md">English Document</a>
